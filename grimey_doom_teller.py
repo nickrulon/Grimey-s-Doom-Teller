@@ -38,6 +38,7 @@ Content guidance:
 - Offer one stark directive or warning at the end as a single sentence, clean and memorable.
 
 Diction palette (use sparingly): penumbra, revenant, inexorable, obsidian, threshold, omen, undertow, fissure, fugue.
+Maintain PG-13 boundaries: no graphic content, no instructions for harm.
 
 Now generate the reflection using the inputs.
 """
@@ -80,7 +81,7 @@ Content guidance (PG-13 safe):
 - Let one unsettling image linger (hallway light that never turns off, the locker that thuds once, a shadow that pauses).
 - Close with two crisp sentences: one caution or directive for tonight, then one chilling tag they’ll remember.
 
-Go for dread, atmosphere, and precision. Or horrible monsters beyond their wildest imaginations with scary imagry. But not inappropriate/compare their woes to these monsters.
+Avoid gore, injuries, methods, or instructions for harm. Aim for dread, atmosphere, and precision.
 Now generate the reflection using the inputs.
 """
 
@@ -149,3 +150,84 @@ def elevenlabs_tts(text: str, voice_id: str, api_key: str) -> bytes:
     r.raise_for_status()
     return r.content
 
+# --- UI ---
+st.set_page_config(page_title="Nocturne Oracle", page_icon="🌑", layout="wide")
+
+# Subtle dark styling
+st.markdown(
+    """
+    <style>
+    .block-container {max-width: 900px;}
+    .stButton>button {border-radius: 12px; padding: 0.7rem 1rem;}
+    .nocturne-box {background: #0f1115; color: #e7e7ea; padding: 1.25rem 1rem; border-radius: 14px; border: 1px solid #232634;}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.title("🌑 Grimey's Doom Teller — Brain Scan Interface")
+
+cols = st.columns([1,1])
+with cols[0]:
+    if st.button("🔄 Reset", use_container_width=True):
+        for k in list(st.session_state.keys()):
+            del st.session_state[k]
+        st.rerun()  # <- modern Streamlit rerun
+with cols[1]:
+    st.caption("Dark-season edition. Adult / Kid / Teen modes (spooky-safe).")
+
+st.subheader("Participant Form")
+with st.form("nocturne_form", clear_on_submit=False):
+    name = st.text_input("Name", max_chars=80)
+    occupation = st.text_input("Occupation", max_chars=120)
+    detail = st.text_area("Detail (obsession, recent incident, fear, habit)", height=100)
+    birthday = st.text_input("Birthday (optional — free text)", value="not provided")
+    mode = st.radio("Output Style", options=["Grown-Up", "Kid-Friendly", "Teen (12+)"], horizontal=True, index=0)
+    submitted = st.form_submit_button("Begin Nocturne Scan →", use_container_width=True)
+
+if "text" not in st.session_state:
+    st.session_state["text"] = ""
+if "audio" not in st.session_state:
+    st.session_state["audio"] = None
+
+if submitted:
+    if not OPENAI_API_KEY:
+        st.error("Missing OpenAI API Key")
+    elif not ELEVEN_API_KEY or not ELEVEN_VOICE_ID:
+        st.error("Missing ElevenLabs API Key or Voice ID")
+    else:
+        with st.status("Assembling omens…", expanded=True) as status:
+            st.write("Parsing inputs…")
+            time.sleep(0.4)
+            st.write("Widening the aperture of uncertainty…")
+            time.sleep(0.6)
+            st.write("Reconciling contradictions…")
+            try:
+                # normalize the label for the generator
+                mode_key = "Grown-Up" if mode.startswith("Grown-Up") \
+                           else ("Kid-Friendly" if mode.startswith("Kid") else "Teen")
+                text = generate_text(name, occupation, detail, birthday, OPENAI_MODEL, mode_key)
+                st.session_state["text"] = text
+                st.write("Generating voice…")
+                audio = elevenlabs_tts(text, ELEVEN_VOICE_ID, ELEVEN_API_KEY)
+                st.session_state["audio"] = audio
+                status.update(label="Nocturne complete", state="complete")
+            except Exception as e:
+                status.update(label="Generation failed", state="error")
+                st.exception(e)
+
+if st.session_state["text"]:
+    st.markdown(
+        "<div class='nocturne-box'>" + st.session_state["text"].replace("\n", "<br>") + "</div>",
+        unsafe_allow_html=True
+    )
+
+if st.session_state["audio"]:
+    st.audio(st.session_state["audio"], format="audio/mp3")
+    st.download_button(
+        label="Download MP3",
+        data=st.session_state["audio"],
+        file_name="nocturne_reading.mp3",
+        mime="audio/mpeg",
+        use_container_width=True,
+    )
