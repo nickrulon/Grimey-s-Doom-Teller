@@ -30,15 +30,14 @@ Rules of address:
 - Begin by saying the user's Name as the very first word, followed by a period. Speak directly to them.
 - Use every piece of provided info explicitly: Name, Occupation, and the Detail (quote or paraphrase a key phrase);
   if a Birthday is provided, weave a subtle seasonal omen or atmosphere from that month.
-- Two short paragraphs max (total 90–140 words). Sentences predominantly concise. No list formatting.
+- One short paragraph + one final sentence max (total 70–100 words). Sentences predominantly concise. No list formatting. End on an ironic positive sentiment that is in strong crontrast with the above. It should be a funny button on the dower doom tell.
 
 Content guidance:
 - Read what they carry (tension, flaw, hunger, pattern) with a chilling, matter-of-fact clarity.
 - Name one precise behavioral trap or “haunting” they repeat.
 - Offer one stark directive or warning at the end as a single sentence, clean and memorable.
 
-Diction palette (use sparingly): penumbra, revenant, inexorable, obsidian, threshold, omen, undertow, fissure, fugue.
-Maintain PG-13 boundaries: no graphic content, no instructions for harm.
+Diction palette. use sparingly, and use as inspiration, use words like: penumbra, revenant, inexorable, obsidian, threshold, omen, undertow, fissure, fugue, etc.
 
 Now generate the reflection using the inputs.
 """
@@ -53,11 +52,11 @@ Rules of address:
 - Start by saying the child's Name as the first word, followed by a period. Speak directly to them.
 - Use every piece of provided info explicitly: Name, Occupation (as they describe themselves), and the Detail
   (echo a fun phrase in quotes once). If a Birthday/month is provided, add a tiny seasonal omen (moonlight, leaves, fog).
-- Two short paragraphs total, ~70–110 words. Short, concrete sentences. Fun imagery: creaky floorboards, moonlight,
+- One short paragraph + one final sentence max (total 70–100 words). Short, concrete sentences. Fun imagery: creaky floorboards, moonlight,
   fog, whispering lockers, friendly ghosts, library shadows, Halloween pumpkins. No blood, no weapons.
 
 Content guidance:
-- Make 1–2 playful “scary but safe” observations about their habits or quirks using their Detail.
+- Go for silly!! Make 1–2 playful “scary but safe” observations about their habits or quirks using their Detail.
 - Hint at a funny “haunting” they can outsmart (e.g., the Homework Goblin, the Snack Phantom).
 - End with two short sentences: one friendly directive for tonight, then a cheeky spooky punchline.
 
@@ -74,15 +73,14 @@ Rules of address:
 - Use every piece of info explicitly: Name, Occupation (as they describe it), and Detail
   (quote a striking phrase once). If a Birthday/month is provided, fold in a small seasonal omen
   (cold metal bleachers in October, late-summer static, winter window-frost).
-- Keep it tight: two short paragraphs, 80–120 words total. Sentences mostly short. No fluff.
+- Keep it tight: One short paragraph + one final sentence max (total 70–100 words). Sentences mostly short. No fluff.
 
 Content guidance (PG-13 safe):
 - Name the pattern they’re trapped in, and the thing that keeps pulling them back.
 - Let one unsettling image linger (hallway light that never turns off, the locker that thuds once, a shadow that pauses).
 - Close with two crisp sentences: one caution or directive for tonight, then one chilling tag they’ll remember.
 
-Avoid gore, injuries, methods, or instructions for harm. Aim for dread, atmosphere, and precision.
-Now generate the reflection using the inputs.
+Go for dread, atmosphere, and precision. Or horrible monsters beyond their wildest imaginations with scary imagry. But not inappropriate/compare their woes to these monsters. Now generate the reflection using the inputs.
 """
 
 USER_MSG = (
