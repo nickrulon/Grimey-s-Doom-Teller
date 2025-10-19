@@ -132,8 +132,20 @@ def generate_text(name: str, occupation: str, detail: str, birthday: str, model:
 # --- ElevenLabs TTS ---
 def elevenlabs_tts(text: str, voice_id: str, api_key: str) -> bytes:
     url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
-    headers = {"xi-api-key": api_key, "accept": "audio/mpeg", "Content-Type": "application/json"}
+    headers = {
+        "xi-api-key": api_key,
+        "accept": "audio/mpeg",
+        "Content-Type": "application/json"
+    }
     payload = {
         "text": text,
         "model_id": "eleven_multilingual_v2",
-        "voice_settings": {"stability": 0.5, "similarity_boost": 0.
+        "voice_settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.75
+        }
+    }
+    r = requests.post(url, headers=headers, json=payload, timeout=120)
+    r.raise_for_status()
+    return r.content
+
